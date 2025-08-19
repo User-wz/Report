@@ -7,7 +7,7 @@ file name : logins
 Author : Administrator
 date : 2025/08/19  19:59
 '''
-from datetime import datetime, timedelta
+from datetime import  timedelta
 from fastapi import  Depends, HTTPException, status, APIRouter
 from fastapi.security import  OAuth2PasswordRequestForm
 from redis import Redis
@@ -49,7 +49,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
              description="用户退出登录API 接口",
              responses={200: {"message": "Successfully logged out"}, }
              )
-async def logout(current_user: User = Depends(get_current_active_user), token: str = Depends(oauth2_scheme),redis: Redis = Depends(get_redis)):
+async def logout(current_user: User = Depends(get_current_active_user), token: Token = Depends(oauth2_scheme),redis: Redis = Depends(get_redis)):
     # 从Redis中删除token使其失效
     await redis.delete(token)
     return {"message": "Successfully logged out"}
