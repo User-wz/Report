@@ -23,7 +23,7 @@ async def create_user(user: UserIn):
     return exam_user_obj
 
 
-@router.get("/", response_model=list[UserOut],
+@router.get("/get_users", response_model=list[UserOut],
             summary="User获取用户列表",
             description="User获取用户列表",
             status_code=status.HTTP_200_OK)

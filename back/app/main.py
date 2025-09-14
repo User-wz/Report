@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, status, Depends
 from redis import Redis
+from starlette.middleware.cors import CORSMiddleware
 
 from app import settings
 from app.api.v1.api import api_router
@@ -61,6 +62,13 @@ def get_application() -> FastAPI:
         openapi_tags=[
             {"name": "CRUD | PostgreSQL | Redis | WebSocket", "description": "示例"},
         ],
+    )
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # 允许所有来源
+        allow_credentials=True,  # 允许携带凭据（如 Cookies）
+        allow_methods=["*"],  # 允许所有 HTTP 方法
+        allow_headers=["*"],  # 允许所有请求头
     )
 
     """

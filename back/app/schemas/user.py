@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, List, Dict, Any
+from typing import Optional
 
 from pydantic import BaseModel, EmailStr, ConfigDict
 
@@ -12,7 +12,7 @@ from pydantic import BaseModel, EmailStr, ConfigDict
 # TODO：================= 用户 =======================#
 
 class BaseUser(BaseModel):
-    # TODO 示例：基础
+    # TODO 基础用户
     username: Optional[str] = None
     nickname: Optional[str] = None
     email: Optional[EmailStr] = None
@@ -22,7 +22,7 @@ class BaseUser(BaseModel):
 
 
 class UserIn(BaseUser):
-    # TODO 示例：创建用户
+    # TODO 创建用户
     username: Optional[str]
     password: Optional[str]
     group_id: Optional[int]
@@ -37,7 +37,7 @@ class UserUpdate(UserIn):
 
 
 class UserOut(BaseUser):
-    # TODO 示例：用户详情
+    # TODO 用户详情
     id: int
     created_at: datetime
     updated_at: datetime
@@ -74,49 +74,3 @@ class GroupOutList(BaseModel):
     model_config = ConfigDict(
         from_attributes=True
     )
-
-
-
-
-class UserBase(BaseModel):
-    username: str
-    email: str
-    is_active: bool = True
-    role: str = "candidate"
-
-    model_config = ConfigDict(
-        from_attributes=True,
-        arbitrary_types_allowed=True
-    )
-
-
-class UserCreate(UserBase):
-    password: str
-
-
-class UserResponse(UserBase):
-    id: int
-    created_at: datetime
-    updated_at: datetime
-
-
-class HunterProfileBase(BaseModel):
-    company: Optional[str] = None
-    title: Optional[str] = None
-    specialization: Optional[str] = None
-    contact_info: Optional[Dict[str, Any]] = None
-
-    model_config = ConfigDict(
-        from_attributes=True,
-        arbitrary_types_allowed=True
-    )
-
-
-class HunterProfileCreate(HunterProfileBase):
-    user_id: int
-
-
-class HunterProfileResponse(HunterProfileBase):
-    id: int
-    created_at: datetime
-    updated_at: datetime
